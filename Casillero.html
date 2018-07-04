@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <script>
+        var array = ["aro", "tea", "noe", "humo"];
+        var inicioTiempo = Date.now(); //aquí se guardará cuando se muestra el número para calcular el tiempo que tarda el usuario en pulsar comprobar
+        var fnMostrarAcierto = function (numero, palabraArray, palabraUsuario,tiempo) {
+            var Mensajes = document.getElementById("mensajes");
+            var mensaje = "" + numero + ") " + palabraUsuario + "=" + palabraArray + " OK";
+            Mensajes.innerHTML = "<li>" + mensaje + "</li>" + Mensajes.innerHTML;
+
+        }
+        var fnMostrarFallo = function (numero, palabraArray, palabraUsuario,tiempo) {
+            var Mensajes = document.getElementById("mensajes");
+            var mensaje = "" + numero + ") " + palabraUsuario + " ≠ " + palabraArray + " Error (" + tiempo/1000 + " segundos)";
+            Mensajes.innerHTML = "<li>" + mensaje + "</li>" + Mensajes.innerHTML;
+
+        }
+        var fnComprobarNumeroAPalabra = function () {
+            var tiempo = Date.now() - inicioTiempo;
+            var numero = parseInt(document.getElementById("txtNumero").innerText);
+            var palabra = document.getElementById("txtPalabra").value;
+
+            if (array[numero].toUpperCase() === palabra.toUpperCase()) {
+                fnMostrarAcierto(numero, array[numero], palabra,tiempo);
+            } else {
+                fnMostrarFallo(numero, array[numero], palabra,tiempo);
+            }
+        }
+        var fnSiguienteNumeroAPalabra = function () {
+            var numero = Math.floor((Math.random() * array.length));
+            var txtNumero = document.getElementById("txtNumero");
+            var txtPalabra = document.getElementById("txtPalabra");
+            txtPalabra.value = "";
+            txtPalabra.focus();
+            txtNumero.innerHTML = numero;
+            inicioTiempo = Date.now();
+        }
+    </script>
+    <h2>Por el número escribir la palabra</h2>
+    <label for="txtNumero">Numero</label>
+    <p><span id="txtNumero">0</span></p>
+    <p><input id="txtPalabra" type="text" /></p>
+    <p>
+        <button id="btnNumeroAPalabra" onclick="fnComprobarNumeroAPalabra();">Comprobar</button>
+        <button id="btnSiguienteNumeroAPalabra" onclick="fnSiguienteNumeroAPalabra();">Otro más</button>
+    </p>
+    <div id="divMensajes">
+        <ul id="mensajes"></ul>
+    </div>
+    <script>
+            /*
+            aux = document.getElementById("mensajes");
+            for (i = 0; i < array.length; i++) {
+                aux.innerHTML += "<li>" + i + ") " + array[i] + "</li>";
+            }
+            */
+    </script>
+</body>
+</html>
